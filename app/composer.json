@@ -1,0 +1,20 @@
+{
+    "name": "theago/backend-challange",
+    "description": "Challange backend",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Theago\\BackendChallange\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "thiago.henrique",
+            "email": "theago.dev@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.0"
+    }
+}
