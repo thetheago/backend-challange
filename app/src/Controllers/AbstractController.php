@@ -10,8 +10,7 @@ abstract class AbstractController implements IController
 {
     public function __construct(
         public ?array $payload
-    )
-    {
+    ) {
     }
 
     // NÃO ACREDITO QUE O PHP N TEM OVERLOAD DE MÉTODO CARA!!
@@ -45,7 +44,6 @@ abstract class AbstractController implements IController
     public function getAll(): void
     {
         throw new MethodNotAllowedException("GET method is not supported by this route.");
-
     }
 
     /**
@@ -53,7 +51,7 @@ abstract class AbstractController implements IController
      */
     public function post(): void
     {
-        throw new MethodNotAllowedException(strtoupper(__FUNCTION__)." method is not supported by this route.");
+        throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
 
     /**
@@ -61,7 +59,7 @@ abstract class AbstractController implements IController
      */
     public function put(int $id): void
     {
-        throw new MethodNotAllowedException(strtoupper(__FUNCTION__)." method is not supported by this route.");
+        throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
 
     /**
@@ -69,7 +67,7 @@ abstract class AbstractController implements IController
      */
     public function patch(): void
     {
-        throw new MethodNotAllowedException(strtoupper(__FUNCTION__)." method is not supported by this route.");
+        throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
 
     /**
@@ -77,7 +75,7 @@ abstract class AbstractController implements IController
      */
     public function options(): void
     {
-        throw new MethodNotAllowedException(strtoupper(__FUNCTION__)." method is not supported by this route.");
+        throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
 
     /**
@@ -85,7 +83,7 @@ abstract class AbstractController implements IController
      */
     public function head(): void
     {
-        throw new MethodNotAllowedException(strtoupper(__FUNCTION__)." method is not supported by this route.");
+        throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
 
     /**
@@ -93,6 +91,6 @@ abstract class AbstractController implements IController
      */
     public function delete(int $id): void
     {
-        throw new MethodNotAllowedException(strtoupper(__FUNCTION__)." method is not supported by this route.");
+        throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
 }

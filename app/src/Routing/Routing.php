@@ -70,10 +70,8 @@ class Routing implements IRouting
                 array_shift($matches);
                 if (isset($matches[0])) {
                     if (!is_numeric($matches[0])) {
-
                         // Bad smell : Esta validação parece estar na classe errada, ferindo o SRP
                         throw new InvalidParamFormatExceptionException($matches[0]);
-
                     } else {
                         $matches[0] = (int) $matches[0];
                     }
