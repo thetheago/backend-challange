@@ -68,15 +68,17 @@ class Routing implements IRouting
         foreach ($this->routes as $pattern => $controller) {
             if (preg_match("#^$pattern$#", $this->uri, $matches)) {
                 array_shift($matches);
-                if (!is_numeric($matches[0])) {
+                if (isset($matches[0])) {
+                    if (!is_numeric($matches[0])) {
 
-                    // Bad smell : Esta validação parece estar na classe errada, ferindo o SRP
-                    throw new InvalidParamFormatExceptionException($matches[0]);
+                        // Bad smell : Esta validação parece estar na classe errada, ferindo o SRP
+                        throw new InvalidParamFormatExceptionException($matches[0]);
 
-                } else {
-                    $matches[0] = (int) $matches[0];
+                    } else {
+                        $matches[0] = (int) $matches[0];
+                    }
                 }
-                return ['controller' => $controller, 'param' => $matches[0]];
+                return ['controller' => $controller, 'param' => $matches[0] ?? []];
             }
         }
 
