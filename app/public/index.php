@@ -2,9 +2,20 @@
 
 require_once "../vendor/autoload.php";
 
-header("Content-Type: application/json");
-var_dump($_SERVER);
+use Theago\BackendChallange\Exceptions\AbstractCustomExceptions;
+use Theago\BackendChallange\Routing\Routing;
 
-// Importar o routing, o routing vai pegar qual endpoint e mandar para qual controller, a controller vai ficar responsável por dizer
-// se ela implementa aquele método no tal endpoint, se sim executa, se não lança uma exception que será tratada pelo ExceptionHandler
-// no catch do Routing.php talvez
+try {
+    $payload = file_get_contents('php://input');
+    $routing = new Routing(uri: $_SERVER['REQUEST_URI'], method: $_SERVER['REQUEST_METHOD'], payload: $payload);
+    $routing->handleRoute();
+} catch (Throwable $e) {
+    if ($e instanceof AbstractCustomExceptions) {
+        echo $e->getMessage();
+        die();
+    }
+
+    // TODO: Dar uma olhada no Observable Pattern para logar o erro em um file com o HASH no nome (gerado random)
+     echo $e->getMessage();
+    //Log
+}

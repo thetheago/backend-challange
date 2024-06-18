@@ -8,4 +8,4 @@ services:
     volumes:
       - ./app:/var/www/
     command: >
-      sh -c "composer install && php -S 0.0.0.0:8000 -t public"
+      sh -c "php -S 0.0.0.0:8000 -t public"
