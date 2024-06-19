@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Theago\BackendChallange\Controllers;
 
+use Theago\BackendChallange\Models\UserModel;
+use Theago\BackendChallange\Utils\Utils;
+
 class UserController extends AbstractController
 {
     public function post(): void
@@ -15,7 +18,8 @@ class UserController extends AbstractController
     public function getById(int $id): void
     {
         // Fetch users
-        echo "Usuário $id buscado";
+        $model = new UserModel();
+        $user = $model->findById($id);
     }
 
     public function getAll(): void

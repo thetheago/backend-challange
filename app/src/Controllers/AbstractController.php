@@ -13,7 +13,6 @@ abstract class AbstractController implements IController
     ) {
     }
 
-    // NÃO ACREDITO QUE O PHP N TEM OVERLOAD DE MÉTODO CARA!!
     /**
      * @throws MethodNotAllowedException
      */

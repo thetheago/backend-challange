@@ -9,3 +9,12 @@ services:
       - ./app:/var/www/
     command: >
       sh -c "php -S 0.0.0.0:8000 -t public"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
