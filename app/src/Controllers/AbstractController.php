@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Theago\BackendChallange\Controllers;
 
 use Theago\BackendChallange\Exceptions\Routing\MethodNotAllowedException;
+use Theago\BackendChallange\Responses\JsonResponse;
 
 abstract class AbstractController implements IController
 {
@@ -32,7 +33,7 @@ abstract class AbstractController implements IController
     /**
      * @throws MethodNotAllowedException
      */
-    public function getById(int $id): void
+    public function getById(int $id): JsonResponse
     {
         throw new MethodNotAllowedException("GET method is not supported by this route.");
     }
@@ -40,7 +41,7 @@ abstract class AbstractController implements IController
     /**
      * @throws MethodNotAllowedException
      */
-    public function getAll(): void
+    public function getAll(): JsonResponse
     {
         throw new MethodNotAllowedException("GET method is not supported by this route.");
     }
@@ -48,7 +49,7 @@ abstract class AbstractController implements IController
     /**
      * @throws MethodNotAllowedException
      */
-    public function post(): void
+    public function post(): JsonResponse
     {
         throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
@@ -56,7 +57,7 @@ abstract class AbstractController implements IController
     /**
      * @throws MethodNotAllowedException
      */
-    public function put(int $id): void
+    public function put(int $id): JsonResponse
     {
         throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }
@@ -88,7 +89,7 @@ abstract class AbstractController implements IController
     /**
      * @throws MethodNotAllowedException
      */
-    public function delete(int $id): void
+    public function delete(int $id): JsonResponse
     {
         throw new MethodNotAllowedException(strtoupper(__FUNCTION__) . " method is not supported by this route.");
     }

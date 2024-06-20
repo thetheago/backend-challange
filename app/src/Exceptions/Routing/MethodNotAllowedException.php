@@ -10,7 +10,6 @@ class MethodNotAllowedException extends AbstractCustomExceptions
 {
     public function __construct(string $message = "This method is not supported by this route.")
     {
-        header("HTTP/1.1 405 Method Not Allowed");
         parent::__construct($message, 405);
     }
 }

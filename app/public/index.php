@@ -3,6 +3,7 @@
 require_once "../vendor/autoload.php";
 
 use Theago\BackendChallange\Exceptions\AbstractCustomExceptions;
+use Theago\BackendChallange\Responses\JsonResponse;
 use Theago\BackendChallange\Routing\Routing;
 
 try {
@@ -11,7 +12,7 @@ try {
     $routing->handleRoute();
 } catch (Throwable $e) {
     if ($e instanceof AbstractCustomExceptions) {
-        echo $e->getMessage();
+        echo new JsonResponse(status: $e->getCode(), data: ['message' => $e->getMessage()]);
         die();
     }
 

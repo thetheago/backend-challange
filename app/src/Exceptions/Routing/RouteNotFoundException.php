@@ -10,7 +10,6 @@ class RouteNotFoundException extends AbstractCustomExceptions
 {
     public function __construct(string $message = "Route not found.")
     {
-        header("HTTP/1.1 404 Not Found");
         parent::__construct($message, 404);
     }
 }

@@ -5,26 +5,36 @@ declare(strict_types=1);
 namespace Theago\BackendChallange\Controllers;
 
 use Theago\BackendChallange\Models\UserModel;
+use Theago\BackendChallange\Responses\JsonResponse;
 use Theago\BackendChallange\Utils\Utils;
 
 class UserController extends AbstractController
 {
-    public function post(): void
+    //TODO: Try catchs
+    public function post(): JsonResponse
     {
-        // Generate a new user
-        echo "Novo usuário criado";
+        $user = new UserModel();
+        $user->setName(name: $this->payload->name);
+        $user->setEmail(email: $this->payload->email);
+        $user->setCpf(cpf: $this->payload->cpf);
+        $user->setShopkeeper(shopkeeper: $this->payload->shopkeeper);
+        $user->setAmount(amount: $this->payload->amount);
+        $user->save();
+
+        return new JsonResponse(status: 201, data: $user->getAttributes());
     }
 
-    public function getById(int $id): void
+    public function getById(int $id): JsonResponse
     {
-        // Fetch users
         $model = new UserModel();
         $user = $model->findById($id);
+        return new JsonResponse(status: 200, data: $user->getAttributes());
     }
 
-    public function getAll(): void
+    public function getAll(): JsonResponse
     {
-        // Fetch users
-        echo "Usuários buscados";
+        $model = new UserModel();
+        $users = $model->findAll();
+        return new JsonResponse(status: 200, data: $users);
     }
 }

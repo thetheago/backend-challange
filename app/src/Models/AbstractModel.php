@@ -25,4 +25,15 @@ class AbstractModel
             Utils::dd($e->getMessage(), true);
         }
     }
+
+    public function findAll(): array
+    {
+        $allData = [];
+        $fetch = $this->collection->find();
+
+        foreach ($fetch as $row) {
+            $allData[] = $row;
+        }
+        return $allData;
+    }
 }

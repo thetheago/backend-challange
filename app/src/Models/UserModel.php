@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Theago\BackendChallange\Models;
 
+use Theago\BackendChallange\Utils\Utils;
+
 class UserModel extends AbstractModel
 {
     private int $id;
@@ -81,7 +83,26 @@ class UserModel extends AbstractModel
 
     public function save(): self
     {
-        return $this;
+        try {
+            if ($this->getId() == null) {
+                $this->setId(rand(1, 100));
+            }
+
+            $this->collection->insertOne([
+                'id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'cpf' => $this->cpf,
+                'shopkeeper' => $this->shopkeeper,
+                'amount' => $this->amount,
+            ]);
+
+            return $this;
+        } catch (\Throwable $e) {
+            Utils::dd($e->getMessage());
+
+            return $this;
+        }
     }
 
     public function findById(int $id): self
@@ -106,5 +127,31 @@ class UserModel extends AbstractModel
         $this->setCpf($user->cpf);
         $this->setShopkeeper($user->shopkeeper);
         $this->setAmount($user->amount);
+    }
+
+    public function getAttributes(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'cpf' => $this->cpf,
+            'shopkeeper' => $this->shopkeeper,
+            'amount' => $this->amount
+        ];
+    }
+
+    public function findAll(): array
+    {
+        $allUsers = [];
+        $all = parent::findAll();
+
+        foreach ($all as $user) {
+            $newUser = new $this;
+            $newUser->fillAttributes($user);
+            $allUsers[] = $newUser;
+        }
+
+        return $allUsers;
     }
 }

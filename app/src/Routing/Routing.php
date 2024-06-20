@@ -9,6 +9,7 @@ use Theago\BackendChallange\Controllers\UserController;
 use Theago\BackendChallange\Exceptions\Routing\InvalidParamFormatExceptionException;
 use Theago\BackendChallange\Exceptions\Routing\MethodNotAllowedException;
 use Theago\BackendChallange\Exceptions\Routing\RouteNotFoundException;
+use Theago\BackendChallange\Responses\JsonResponse;
 
 class Routing implements IRouting
 {
@@ -48,7 +49,7 @@ class Routing implements IRouting
                 $controller->{$this->method}($route['param']);
                 return;
             }
-            $controller->{$this->method}();
+            echo $controller->{$this->method}();
         } catch (RouteNotFoundException $e) {
             throw new RouteNotFoundException($e->getMessage());
         } catch (MethodNotAllowedException $e) {
