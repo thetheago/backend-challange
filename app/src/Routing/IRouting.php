@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Theago\BackendChallange\Routing;
 
-use Theago\BackendChallange\Exceptions\RouteNotFoundException;
+use Theago\BackendChallange\Exceptions\Routing\RouteNotFoundException;
 
 interface IRouting
 {
