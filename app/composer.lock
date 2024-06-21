@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9916cf03149d6020f53d8a79910c6bc8",
+    "content-hash": "8750bb4ba851a0d2b2256ca42ed49c95",
     "packages": [
         {
             "name": "mongodb/mongodb",
@@ -82,6 +82,72 @@
                 "source": "https://github.com/mongodb/mongo-php-library/tree/1.19.1"
             },
             "time": "2024-06-13T14:30:04+00:00"
+        },
+        {
+            "name": "pda/pheanstalk",
+            "version": "v5.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pheanstalk/pheanstalk.git",
+                "reference": "dd976acf568d45efddf76494e7ac06fa961b517e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pheanstalk/pheanstalk/zipball/dd976acf568d45efddf76494e7ac06fa961b517e",
+                "reference": "dd976acf568d45efddf76494e7ac06fa961b517e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=8.1.0"
+            },
+            "require-dev": {
+                "captainhook/plugin-composer": "^5.3",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "phpunit/phpunit": "^10",
+                "ramsey/conventional-commits": "^1.2",
+                "symplify/easy-coding-standard": "^11",
+                "vimeo/psalm": "^5"
+            },
+            "suggest": {
+                "ext-sockets": "Socket implementation works best for long running processes"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pheanstalk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Annesley",
+                    "email": "paul@annesley.cc",
+                    "homepage": "http://paul.annesley.cc/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sam Mousa",
+                    "email": "sam@mousa.nl",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "PHP client for beanstalkd queue",
+            "homepage": "https://github.com/pheanstalk/pheanstalk",
+            "keywords": [
+                "beanstalkd"
+            ],
+            "support": {
+                "issues": "https://github.com/pheanstalk/pheanstalk/issues",
+                "source": "https://github.com/pheanstalk/pheanstalk/tree/v5.0.5"
+            },
+            "time": "2024-03-04T12:25:02+00:00"
         },
         {
             "name": "psr/log",

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Theago\BackendChallange\Controllers;
 
 
+use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentJob;
 use Theago\BackendChallange\Exceptions\InvalidTypeException;
 use Theago\BackendChallange\Exceptions\Routing\MissingParameterException;
 use Theago\BackendChallange\Exceptions\ValidationException;
@@ -50,6 +51,13 @@ class TransferController extends AbstractController
 
         $isTransferValid = $payerExists->processValidation($transferType);
         if ($isTransferValid) {
+            $paymentJob = new PaymentJob();
+            $paymentJob->createJob([
+                'value' => $transferType->getValue(),
+                'payer' => $transferType->getPayer(),
+                'payee' => $transferType->getPayee()
+            ]);
+
             return new JsonResponse(status: 200, data: [
                 'message' => 'Your transfer will be processed in a few seconds.'
             ]);

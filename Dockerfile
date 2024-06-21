@@ -7,10 +7,11 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 RUN apt-get update && apt-get install -y \
     pkg-config \
     && pecl install mongodb \
-    && docker-php-ext-enable mongodb
+    && docker-php-ext-enable mongodb \
+    && docker-php-ext-install sockets
 RUN install-php-extensions gd zip
 RUN mkdir public
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 EXPOSE 8000
-
-CMD ["php","-S","0.0.0.0:8000","-t","/var/www/public"]

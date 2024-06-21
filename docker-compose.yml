@@ -4,13 +4,13 @@ services:
   payment:
     build: .
     ports:
-      - 8000:8000
+      - "8000:8000"
     volumes:
       - ./app:/var/www/
-    command: >
-      sh -c "php -S 0.0.0.0:8000 -t public"
+    command: /bin/bash -c "/usr/local/bin/start.sh"
     depends_on:
       - mongodb
+      - beanstalkd
 
   mongodb:
     image: mongo
@@ -18,3 +18,8 @@ services:
       - "27017:27017"
     volumes:
       - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
+  beanstalkd:
+    image: bodsch/docker-beanstalkd
+    ports:
+      - "11300:11300"
