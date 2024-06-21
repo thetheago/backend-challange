@@ -6,6 +6,7 @@ namespace Theago\Beanstalkd;
 
 use Pheanstalk\Values\Job;
 use Pheanstalk\Values\TubeName;
+use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentAuthenticator;
 
 class ProcessPaymentsWorker extends Worker
 {
@@ -16,8 +17,12 @@ class ProcessPaymentsWorker extends Worker
 
     public function run(Job $job): void
     {
-        // Processa o payment
-
+        $authenticated = PaymentAuthenticator::isAuthenticated();
+        if ($authenticated) {
+            // Process Transaction DB Operation
+        } else {
+            // Send notification of unauthorized.
+        }
         $this->queue->delete($job);
     }
 }

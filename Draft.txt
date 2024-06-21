@@ -1,7 +1,7 @@
 Draft
 
 Passo 1: Orgnizar estrutura [x]
-Passo 2: Organizar serviço com mongodb e beanstalk []
+Passo 2: Organizar serviço com mongodb e beanstalk [x]
 Passo 3: Garantir ACID na transferencia (Saga pattern na mensageria) []
 Passo 4: Enviar notificação em caso de Ok ou Falha
     (lembrar de tratar também a indisponibilidade do serviço de e-mail) []
@@ -36,12 +36,12 @@ Salvar os users no mongodb na collection users(_id, nome, email, cpf, lojistas)
 Para fazer a transferencia o fluxo será:
 
 (Verificar possibilidade de usar o Chain of responsibility)
-if (Verificar se payer e payee existem) {
-    if (Verificar se o user é lojista ou não) {
-        if (Tem saldo suficiente) {
-            if (Consultar serviço verificador) {
+if (Verificar se payer e payee existem) { [x]
+    if (Verificar se o user é lojista ou não) { [x]
+        if (Tem saldo suficiente) { [x]
+            if (Consultar serviço verificador) { [x]
 
-            } else {
+            } else { [x]
                 handle da Fail do serviço
             }
         } else {

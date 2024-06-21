@@ -12,6 +12,7 @@ abstract class Worker extends AbstractBeanstalkdConnection
     public function __construct(TubeName $tube)
     {
         try {
+            echo 'Initializing worker...' . PHP_EOL;
             parent::__construct($tube);
             $this->queue->watch($tube);
         } catch (\Exception $e) {
@@ -23,7 +24,6 @@ abstract class Worker extends AbstractBeanstalkdConnection
     public function runWorker(callable $callback): void
     {
         try {
-            echo 'Initializing worker...';
             while ($job = $this->queue->reserve()) {
                 $this->logJob($job);
                 $callback($job);
