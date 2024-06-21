@@ -105,16 +105,22 @@ class UserModel extends AbstractModel
         }
     }
 
-    public function findById(int $id): self
+    public function findById(int $id): self|null
     {
         $user = $this->collection->findOne(['id' => $id]);
+        if ($user === null) {
+            return null;
+        }
         $this->fillAttributes($user);
         return $this;
     }
 
-    public function findByEmail(string $email): self
+    public function findByEmail(string $email): self|null
     {
         $user = $this->collection->findOne(['email' => $email]);
+        if ($user === null) {
+            return null;
+        }
         $this->fillAttributes($user);
         return $this;
     }
@@ -147,7 +153,7 @@ class UserModel extends AbstractModel
         $all = parent::findAll();
 
         foreach ($all as $user) {
-            $newUser = new $this;
+            $newUser = new $this();
             $newUser->fillAttributes($user);
             $allUsers[] = $newUser;
         }

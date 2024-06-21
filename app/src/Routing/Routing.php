@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Theago\BackendChallange\Routing;
 
 use Exception;
+use Theago\BackendChallange\Controllers\TransferController;
 use Theago\BackendChallange\Controllers\UserController;
-use Theago\BackendChallange\Exceptions\Routing\InvalidParamFormatExceptionException;
+use Theago\BackendChallange\Exceptions\Routing\InvalidJsonFormatException;
+use Theago\BackendChallange\Exceptions\Routing\InvalidParamFormatException;
 use Theago\BackendChallange\Exceptions\Routing\MethodNotAllowedException;
 use Theago\BackendChallange\Exceptions\Routing\RouteNotFoundException;
-use Theago\BackendChallange\Responses\JsonResponse;
 
 class Routing implements IRouting
 {
@@ -19,8 +20,12 @@ class Routing implements IRouting
     private array $routes = [
         '/user' => UserController::class,
         '/user/([^/]+)' => UserController::class,
+        '/transfer' => TransferController::class,
     ];
 
+    /**
+     * @throws InvalidJsonFormatException
+     */
     public function __construct(string $uri, string $method, string $payload)
     {
         if (str_ends_with($uri, "/")) {
@@ -31,6 +36,10 @@ class Routing implements IRouting
 
         $this->method = strtolower($method);
         if (!empty($payload)) {
+            $arrayPayload = json_decode($payload, true);
+            if ($arrayPayload === null) {
+                throw new InvalidJsonFormatException();
+            }
             $this->payload = json_decode($payload, true);
         }
     }
@@ -58,7 +67,7 @@ class Routing implements IRouting
     }
 
     /**
-     * @throws RouteNotFoundException|InvalidParamFormatExceptionException
+     * @throws RouteNotFoundException|InvalidParamFormatException
      */
     private function matchRoute(): ?array
     {
@@ -71,8 +80,8 @@ class Routing implements IRouting
                 array_shift($matches);
                 if (isset($matches[0])) {
                     if (!is_numeric($matches[0])) {
-                        // Bad smell : Esta validação parece estar na classe errada, ferindo o SRP
-                        throw new InvalidParamFormatExceptionException($matches[0]);
+                        // TODO: Bad smell - Esta validação parece estar na classe errada, ferindo o SRP
+                        throw new InvalidParamFormatException($matches[0]);
                     } else {
                         $matches[0] = (int) $matches[0];
                     }

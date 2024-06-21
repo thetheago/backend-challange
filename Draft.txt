@@ -12,6 +12,8 @@ Fazer containers de injeção de dependencia []
 Fazer validação para models []
 Fazer auto-increment do id no mongo []
 Utilizar enums []
+Colocar content-type acceptable no restful []
+Observabilidade das exceções gerais no index.php []
 
 
 ------------
@@ -32,17 +34,22 @@ Salvar os users no mongodb na collection users(_id, nome, email, cpf, lojistas)
 Para fazer a transferencia o fluxo será:
 
 (Verificar possibilidade de usar o Chain of responsibility)
-if (Verificar se o user é lojista ou não) {
-    if (Tem saldo suficiente) {
-        if (Consultar serviço verificador) {
-            
+if (Verificar se payer e payee existem) {
+    if (Verificar se o user é lojista ou não) {
+        if (Tem saldo suficiente) {
+            if (Consultar serviço verificador) {
+
+            } else {
+                handle da Fail do serviço
+            }
         } else {
-            handle da Fail do serviço
+            throw Saldo insuficiente.
         }
     } else {
-        throw Saldo insuficiente.
+        throw Lojista não envia dinheiro.
     }
 } else {
-    throw Lojista não envia dinheiro.
+    throw Um dos usuarios não existem. (Cuidado para não expor dado sensivel.)
 }
+
     

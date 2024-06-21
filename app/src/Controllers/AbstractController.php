@@ -10,7 +10,7 @@ use Theago\BackendChallange\Responses\JsonResponse;
 abstract class AbstractController implements IController
 {
     public function __construct(
-        public ?array $payload
+        public ?array $payload = []
     ) {
     }
 

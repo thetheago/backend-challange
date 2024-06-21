@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Theago\BackendChallange\Controllers;
+
+
+use Theago\BackendChallange\Exceptions\InvalidTypeException;
+use Theago\BackendChallange\Exceptions\Routing\MissingParameterException;
+use Theago\BackendChallange\Exceptions\ValidationException;
+use Theago\BackendChallange\Models\UserModel;
+use Theago\BackendChallange\Responses\JsonResponse;
+use Theago\BackendChallange\Types\TransferType;
+use Theago\BackendChallange\Utils\Utils;
+use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayeeExists;
+use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayerExists;
+use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayerIsNotAShopkeeper;
+use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayerHasEnoughAmount;
+use Theago\BackendChallange\Validators\TypeValidators\TransferTypeValidator;
+
+class TransferController extends AbstractController
+{
+    /**
+     * @throws MissingParameterException
+     * @throws InvalidTypeException
+     * @throws ValidationException
+     */
+    public function post(): JsonResponse
+    {
+        // TODO: Dependency Injection
+        (new TransferTypeValidator)->validate($this->payload);
+
+        $transferType = new TransferType(
+            value: $this->payload['value'],
+            payer: $this->payload['payer'],
+            payee: $this->payload['payee'],
+        );
+
+        $transferType->setPayerEntity((new UserModel)->findById($transferType->getPayer()));
+        $transferType->setPayeeEntity((new UserModel)->findById($transferType->getPayee()));
+
+        $payerExists          = new ValidateIfPayerExists();
+        $payeeExists          = new ValidateIfPayeeExists();
+        $isPayerShopkeeper    = new ValidateIfPayerIsNotAShopkeeper();
+        $payerHasEnoughAmount = new ValidateIfPayerHasEnoughAmount();
+
+        $payerExists->setNext($payeeExists);
+        $payeeExists->setNext($isPayerShopkeeper);
+        $isPayerShopkeeper->setNext($payerHasEnoughAmount);
+
+        $isTransferValid = $payerExists->processValidation($transferType);
+        if ($isTransferValid) {
+            return new JsonResponse(status: 200, data: [
+                'message' => 'Your transfer will be processed in a few seconds.'
+            ]);
+        }
+
+        throw new ValidationException();
+    }
+}

@@ -14,7 +14,8 @@ class HeaderResponseStatusCode
             400 => $http_version . ' 400 Bad Request',
             405 => $http_version . ' 405 Method Not Allowed',
             404 => $http_version . ' 404 Not Found',
+            422 => $http_version . ' 422 Unprocessable Entity',
+            500 => $http_version . ' 500 Internal Server Error',
         };
     }
-
 }

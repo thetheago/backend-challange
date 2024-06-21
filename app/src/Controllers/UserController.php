@@ -14,11 +14,11 @@ class UserController extends AbstractController
     public function post(): JsonResponse
     {
         $user = new UserModel();
-        $user->setName(name: $this->payload->name);
-        $user->setEmail(email: $this->payload->email);
-        $user->setCpf(cpf: $this->payload->cpf);
-        $user->setShopkeeper(shopkeeper: $this->payload->shopkeeper);
-        $user->setAmount(amount: $this->payload->amount);
+        $user->setName(name: $this->payload['name']);
+        $user->setEmail(email: $this->payload['email']);
+        $user->setCpf(cpf: $this->payload['cpf']);
+        $user->setShopkeeper(shopkeeper: $this->payload['shopkeeper']);
+        $user->setAmount(amount: $this->payload['amount']);
         $user->save();
 
         return new JsonResponse(status: 201, data: $user->getAttributes());
