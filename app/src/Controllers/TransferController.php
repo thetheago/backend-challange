@@ -7,7 +7,9 @@ namespace Theago\BackendChallange\Controllers;
 use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentJob;
 use Theago\BackendChallange\Exceptions\InvalidTypeException;
 use Theago\BackendChallange\Exceptions\Routing\MissingParameterException;
+use Theago\BackendChallange\Exceptions\Transfer\TransferException;
 use Theago\BackendChallange\Exceptions\ValidationException;
+use Theago\BackendChallange\Models\TransferModel;
 use Theago\BackendChallange\Models\UserModel;
 use Theago\BackendChallange\Responses\JsonResponse;
 use Theago\BackendChallange\Types\TransferType;
@@ -62,5 +64,18 @@ class TransferController extends AbstractController
         }
 
         throw new ValidationException();
+    }
+
+    /**
+     * @throws TransferException
+     */
+    public function transfer(TransferType $transfer): void
+    {
+        $payer = (new UserModel())->findById($transfer->getPayer());
+        $payee = ((new UserModel())->findById($transfer->getPayee()));
+        $value = $transfer->getValue();
+
+        $transferModel = new TransferModel();
+        $transferModel->transfer(from: $payer, to: $payee, value: $value);
     }
 }

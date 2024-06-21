@@ -155,7 +155,14 @@ class UserModel extends AbstractModel
         foreach ($all as $user) {
             $newUser = new $this();
             $newUser->fillAttributes($user);
-            $allUsers[] = $newUser;
+            $allUsers[] = [
+                'id' => $newUser->getId(),
+                'name' => $newUser->getName(),
+                'email' => $newUser->getEmail(),
+                'cpf' => $newUser->getCpf(),
+                'shopkeeper' => $newUser->isShopkeeper(),
+                'amount' => $newUser->getAmount()
+            ];
         }
 
         return $allUsers;

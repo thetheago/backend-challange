@@ -46,4 +46,13 @@ abstract class Worker extends AbstractBeanstalkdConnection
             flags: FILE_APPEND
         );
     }
+
+    protected function log(string $path, string $data): void
+    {
+        file_put_contents(
+            filename: $path,
+            data: $data,
+            flags: FILE_APPEND
+        );
+    }
 }

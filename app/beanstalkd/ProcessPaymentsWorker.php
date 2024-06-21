@@ -7,6 +7,9 @@ namespace Theago\Beanstalkd;
 use Pheanstalk\Values\Job;
 use Pheanstalk\Values\TubeName;
 use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentAuthenticator;
+use Theago\BackendChallange\Controllers\TransferController;
+use Theago\BackendChallange\Exceptions\Transfer\TransferException;
+use Theago\BackendChallange\Types\TransferType;
 
 class ProcessPaymentsWorker extends Worker
 {
@@ -17,12 +20,26 @@ class ProcessPaymentsWorker extends Worker
 
     public function run(Job $job): void
     {
-        $authenticated = PaymentAuthenticator::isAuthenticated();
-        if ($authenticated) {
-            // Process Transaction DB Operation
-        } else {
-            // Send notification of unauthorized.
+        try {
+            $authenticated = PaymentAuthenticator::isAuthenticated();
+            if ($authenticated) {
+                $transferController = new TransferController();
+                $data = json_decode(json: $job->getData(), associative: true);
+
+                $transferController->transfer(
+                    new TransferType(
+                        value: $data['value'],
+                        payer: $data['payer'],
+                        payee: $data['payee']
+                    )
+                );
+
+                $this->queue->delete($job);
+            } else {
+                // Send notification of unauthorized.
+            }
+        } catch (TransferException $e) {
+            // Send notification of error.
         }
-        $this->queue->delete($job);
     }
 }
