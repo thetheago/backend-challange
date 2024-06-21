@@ -15,7 +15,7 @@ abstract class TransferValidator extends AbstractValidator
      */
     public function processValidation(TransferType $transfer): bool
     {
-        if($this->validate($transfer)) {
+        if ($this->validate($transfer)) {
             $this->next?->processValidation($transfer);
 
             return true;
@@ -24,5 +24,5 @@ abstract class TransferValidator extends AbstractValidator
         return false;
     }
 
-    protected abstract function validate(TransferType $transfer): bool;
+    abstract protected function validate(TransferType $transfer): bool;
 }

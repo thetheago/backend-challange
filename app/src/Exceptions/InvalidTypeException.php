@@ -9,8 +9,11 @@ use Throwable;
 
 class InvalidTypeException extends AbstractCustomExceptions
 {
-    public function __construct(string $message = "Invalid type in payload", int $code = 400, ?Throwable $previous = null)
-    {
+    public function __construct(
+        string $message = "Invalid type in payload",
+        int $code = 400,
+        ?Throwable $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
     }
 }

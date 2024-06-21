@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Theago\BackendChallange\Exceptions\Routing;
 
 use Theago\BackendChallange\Exceptions\AbstractCustomExceptions;

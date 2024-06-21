@@ -8,7 +8,6 @@ use Theago\BackendChallange\Models\UserModel;
 
 class TransferType
 {
-
     private UserModel|null $payerEntity = null;
     private UserModel|null $payeeEntity = null;
 
@@ -16,8 +15,7 @@ class TransferType
         private float $value,
         private int $payer,
         private int $payee
-    )
-    {
+    ) {
     }
 
     public function getValue(): float

@@ -27,8 +27,8 @@ class AbstractTypeValidator
 
     private function validateRequiredItems(array $payload): array
     {
-        $payload_keys=array_keys($payload);
-        $required_items_keys=array_keys(array_flip($this->required_items));
+        $payload_keys = array_keys($payload);
+        $required_items_keys = array_keys(array_flip($this->required_items));
         return array_keys(array_diff_key($payload_keys, $required_items_keys));
     }
 }

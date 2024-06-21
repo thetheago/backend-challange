@@ -33,7 +33,7 @@ abstract class Worker extends AbstractBeanstalkdConnection
         }
     }
 
-    public abstract function run(Job $job): void;
+    abstract public function run(Job $job): void;
 
     private function logJob(Job $job): void
     {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Theago\BackendChallange\Controllers;
 
-
 use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentJob;
 use Theago\BackendChallange\Exceptions\InvalidTypeException;
 use Theago\BackendChallange\Exceptions\Routing\MissingParameterException;
@@ -12,7 +11,6 @@ use Theago\BackendChallange\Exceptions\ValidationException;
 use Theago\BackendChallange\Models\UserModel;
 use Theago\BackendChallange\Responses\JsonResponse;
 use Theago\BackendChallange\Types\TransferType;
-use Theago\BackendChallange\Utils\Utils;
 use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayeeExists;
 use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayerExists;
 use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayerIsNotAShopkeeper;
@@ -29,7 +27,7 @@ class TransferController extends AbstractController
     public function post(): JsonResponse
     {
         // TODO: Dependency Injection
-        (new TransferTypeValidator)->validate($this->payload);
+        (new TransferTypeValidator())->validate($this->payload);
 
         $transferType = new TransferType(
             value: $this->payload['value'],
@@ -37,8 +35,8 @@ class TransferController extends AbstractController
             payee: $this->payload['payee'],
         );
 
-        $transferType->setPayerEntity((new UserModel)->findById($transferType->getPayer()));
-        $transferType->setPayeeEntity((new UserModel)->findById($transferType->getPayee()));
+        $transferType->setPayerEntity((new UserModel())->findById($transferType->getPayer()));
+        $transferType->setPayeeEntity((new UserModel())->findById($transferType->getPayee()));
 
         $payerExists          = new ValidateIfPayerExists();
         $payeeExists          = new ValidateIfPayeeExists();

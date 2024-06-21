@@ -23,6 +23,8 @@ class ValidateIfPayerHasEnoughAmount extends TransferValidator
             return true;
         }
 
-        throw new ValidationException("Payer {$transfer->getPayer()} does not have enough amount to pay {$amountToTransfer}");
+        throw new ValidationException(
+            "Payer {$transfer->getPayer()} does not have enough amount to pay {$amountToTransfer}"
+        );
     }
 }
