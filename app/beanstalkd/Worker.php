@@ -42,7 +42,7 @@ abstract class Worker extends AbstractBeanstalkdConnection
 
         file_put_contents(
             filename: "/var/log/$logFileName.log",
-            data: "\nJOB " . $job->getId() . " - Data: " . $job->getData(),
+            data: "JOB " . $job->getId() . " - Data: " . $job->getData() . PHP_EOL,
             flags: FILE_APPEND
         );
     }

@@ -8,6 +8,7 @@ use Pheanstalk\Values\Job;
 use Pheanstalk\Values\TubeName;
 use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentAuthenticator;
 use Theago\BackendChallange\Controllers\TransferController;
+use Theago\BackendChallange\Exceptions\ServiceIndisponibleException;
 use Theago\BackendChallange\Exceptions\Transfer\TransferException;
 use Theago\BackendChallange\Types\TransferType;
 
@@ -33,13 +34,19 @@ class ProcessPaymentsWorker extends Worker
                         payee: $data['payee']
                     )
                 );
-
-                $this->queue->delete($job);
             } else {
                 // Send notification of unauthorized.
+                $this->log('/var/log/exception_payment_worker.log', 'Não autorizado.');
             }
         } catch (TransferException $e) {
+            $this->log('/var/log/exception_payment_worker.log', $e->getMessage());
+        } catch (ServiceIndisponibleException $e) {
             // Send notification of error.
+            $this->log('/var/log/exception_payment_worker.log', $e->getMessage());
         }
+
+        // Poderia mandar para outro worker que tentará
+        // processar a solicitação novamente em alguns segundos/minutos.
+        $this->queue->delete($job);
     }
 }
