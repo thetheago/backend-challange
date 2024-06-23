@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Theago\BackendChallange\Models;
 
+use PDO;
 use Theago\BackendChallange\Utils\Utils;
 
 class UserModel extends AbstractModel
@@ -14,12 +15,6 @@ class UserModel extends AbstractModel
     private string $cpf;
     private bool $shopkeeper;
     private float $amount;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->collection = $this->database->selectCollection('users');
-    }
 
     public function getAmount(): float
     {
@@ -76,7 +71,7 @@ class UserModel extends AbstractModel
         return $this->id;
     }
 
-    public function setId(int $id): void
+    private function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -84,18 +79,14 @@ class UserModel extends AbstractModel
     public function save(): self
     {
         try {
-            if ($this->getId() == null) {
-                $this->setId(rand(1, 100));
-            }
+            $stmt = $this->conn->prepare("INSERT INTO users (':name, :email, :cpf, :shopkeeper, :amount')");
+            $stmt->bindParam(':name', $this->name);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':cpf', $this->cpf);
+            $stmt->bindParam(':shopkeeper', $this->shopkeeper, PDO::PARAM_BOOL);
+            $stmt->bindParam(':amount', $this->amount);
 
-            $this->collection->insertOne([
-                'id' => $this->id,
-                'name' => $this->name,
-                'email' => $this->email,
-                'cpf' => $this->cpf,
-                'shopkeeper' => $this->shopkeeper,
-                'amount' => $this->amount,
-            ]);
+            $stmt->execute();
 
             return $this;
         } catch (\Throwable $e) {
@@ -107,32 +98,26 @@ class UserModel extends AbstractModel
 
     public function findById(int $id): self|null
     {
-        $user = $this->collection->findOne(['id' => $id]);
-        if ($user === null) {
-            return null;
-        }
-        $this->fillAttributes($user);
-        return $this;
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        return $this->extracted($stmt);
     }
 
     public function findByEmail(string $email): self|null
     {
-        $user = $this->collection->findOne(['email' => $email]);
-        if ($user === null) {
-            return null;
-        }
-        $this->fillAttributes($user);
-        return $this;
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        return $this->extracted($stmt);
     }
 
-    private function fillAttributes(object $user): void
+    private function fillAttributes(array $user): void
     {
-        $this->setId($user->id);
-        $this->setName($user->name);
-        $this->setEmail($user->email);
-        $this->setCpf($user->cpf);
-        $this->setShopkeeper($user->shopkeeper);
-        $this->setAmount($user->amount);
+        $this->setId($user['id']);
+        $this->setName($user['name']);
+        $this->setEmail($user['email']);
+        $this->setCpf($user['cpf']);
+        $this->setShopkeeper($user['shopkeeper']);
+        $this->setAmount($user['amount']);
     }
 
     public function getAttributes(): array
@@ -150,10 +135,15 @@ class UserModel extends AbstractModel
     public function findAll(): array
     {
         $allUsers = [];
-        $all = parent::findAll();
+        $stmt = $this->conn->query("SELECT * FROM users");
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($all as $user) {
+        foreach ($results as $user) {
             $newUser = new $this();
+
+            $user['shopkeeper'] = $user['shopkeeper'] === 1;
+            $user['amount']     = (float) $user['amount'];
+
             $newUser->fillAttributes($user);
             $allUsers[] = [
                 'id' => $newUser->getId(),
@@ -166,5 +156,23 @@ class UserModel extends AbstractModel
         }
 
         return $allUsers;
+    }
+
+    /**
+     * @param false|\PDOStatement $stmt
+     * @return $this|null
+     */
+    public function extracted(false|\PDOStatement $stmt): ?UserModel
+    {
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            return null;
+        }
+        $user['shopkeeper'] = $user['shopkeeper'] === 1;
+        $user['amount'] = (float)$user['amount'];
+        $this->fillAttributes($user);
+        return $this;
     }
 }

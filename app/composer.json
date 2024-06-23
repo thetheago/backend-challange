@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "mongodb/mongodb": "^1.19",
+        "ext-pdo": "*",
         "pda/pheanstalk": "^5.0"
     },
     "require-dev": {

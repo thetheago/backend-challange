@@ -1,0 +1,16 @@
+INSERT INTO users (id, name, email, cpf, shopkeeper, amount) VALUES
+(1, 'Freddie Mercury', 'freddie.mercury@queen.com', '123.456.789-10', true, 300.00),
+(2, 'Elvis Presley', 'elvis.presley@king.com', '111.222.333-44', false, 500.50),
+(3, 'Kurt Cobain', 'kurt.cobain@nirvana.com', '222.333.444-55', false, 150.00),
+(4, 'Tyler Joseph', 'tyler.joseph@twentyonepilots.com', '987.654.312-01', false, 620.20),
+(5, 'Josh Dun', 'josh.dun@twentyonepilots.com', '111.222.333-44', false, 132.06),
+(6, 'Paul McCartney', 'paul.mccartney@beatles.com', '333.444.555-66', true, 750.75),
+(7, 'John Lennon', 'john.lennon@beatles.com', '444.555.666-77', false, 640.40),
+(8, 'Mick Jagger', 'mick.jagger@rollingstones.com', '555.666.777-88', true, 830.30),
+(9, 'David Bowie', 'david.bowie@ziggy.com', '666.777.888-99', false, 920.90),
+(10, 'Jimi Hendrix', 'jimi.hendrix@purplehaze.com', '777.888.999-00', false, 410.10),
+(11, 'Beyoncé Knowles', 'beyonce@destinyschild.com', '888.999.000-11', true, 1000.00),
+(12, 'Axl Rose', 'axl.rose@gnr.com', '999.000.111-22', false, 300.30),
+(13, 'Slash Hudson', 'slash.hudson@gnr.com', '000.111.222-33', false, 310.40),
+(14, 'Eddie Vedder', 'eddie.vedder@pearljam.com', '111.222.333-55', false, 500.50),
+(15, 'Chris Cornell', 'chris.cornell@soundgarden.com', '111.222.333-44', false, 132.06);

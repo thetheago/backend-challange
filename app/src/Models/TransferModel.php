@@ -11,51 +11,33 @@ use Throwable;
 
 class TransferModel extends AbstractModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->collection = $this->database->selectCollection('users');
-    }
-
-    /**
+     /**
      * @throws TransferException
      */
     public function transfer(UserModel $from, UserModel $to, float $value): void
     {
-        $session = $this->client->startSession();
-
         try {
-            $session->startTransaction();
+            $this->conn->beginTransaction();
 
-            $updateResult1 = $this->collection->updateOne(
-                ['id' => $from->getId()],
-                ['$set' => ['amount' => ($from->getAmount() - $value)]],
-                ['session' => $session]
-            );
+            $stmtFrom = $this->conn->prepare('UPDATE users SET amount = :amount WHERE id = :id');
+            $fromAmount = $from->getAmount() - $value;
+            $fromId = $from->getId();
+            $stmtFrom->bindParam(':amount', $fromAmount);
+            $stmtFrom->bindParam(':id', $fromId);
+            $stmtFrom->execute();
 
-            $updateResult2 = $this->collection->updateOne(
-                ['id' => $to->getId()],
-                ['$set' => ['amount' => ($from->getAmount() + $value)]],
-                ['session' => $session]
-            );
+            $stmtTo = $this->conn->prepare('UPDATE users SET amount = :amount WHERE id = :id');
+            $toAmount = $to->getAmount() + $value;
+            $toId = $to->getId();
+            $stmtTo->bindParam(':amount', $toAmount);
+            $stmtTo->bindParam(':id', $toId);
+            $stmtTo->execute();
 
-            $matched1 = $updateResult1->getMatchedCount();
-            $modified1 = $updateResult1->getModifiedCount();
-    
-            file_put_contents("/var/log/mongodbtest.log", "Matched1 ".$matched1 ."document(s)\n", FILE_APPEND);
-            file_put_contents("/var/log/mongodbtest.log", "Modified1 ".$modified1 ."document(s)\n", FILE_APPEND);
-
-            $matched2 = $updateResult2->getMatchedCount();
-            $modified2 = $updateResult2->getModifiedCount();
-
-            file_put_contents("/var/log/mongodbtest.log", "Matched2 ".$matched2 ."document(s)\n", FILE_APPEND);
-            file_put_contents("/var/log/mongodbtest.log", "Modified2 ".$modified2 ."document(s)\n", FILE_APPEND);
-
-            $session->commitTransaction();
+            $this->conn->commit();
         } catch (Throwable $e) {
-            $session->abortTransaction();
-            echo 'ERRO : ' . $e->getMessage();
-            file_put_contents("/var/log/transferWorkerMongo.log", $e->getMessage(), FILE_APPEND);
+            $this->conn->rollBack();
+
+            file_put_contents("/var/log/transferWorker.err.log", $e->getMessage(), FILE_APPEND);
             throw new TransferException();
 
             // TODO: Observability $e->getStackTrace();

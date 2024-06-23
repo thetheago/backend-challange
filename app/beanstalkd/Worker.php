@@ -23,13 +23,13 @@ abstract class Worker extends AbstractBeanstalkdConnection
 
     public function runWorker(callable $callback): void
     {
-        try {
-            while ($job = $this->queue->reserve()) {
+        while ($job = $this->queue->reserve()) {
+            try {
                 $this->logJob($job);
                 $callback($job);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
             }
-        } catch (\Exception $e) {
-            echo $e->getMessage();
         }
     }
 

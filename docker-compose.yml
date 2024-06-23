@@ -9,15 +9,25 @@ services:
       - ./app:/var/www/
     command: /bin/bash -c "/usr/local/bin/start.sh"
     depends_on:
-      - mongodb
+      - db
       - beanstalkd
+    environment:
+      DB_HOST: db
+      DB_NAME: payment
+      DB_USER: root
+      DB_PASS: root
 
-  mongodb:
-    image: mongo
-    ports:
-      - "27017:27017"
+  db:
+    image: mysql:8.0
     volumes:
-      - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./docker/db/data:/var/lib/db
+      - ./docker/db/migration.sql:/docker-entrypoint-initdb.d/1-migration.sql
+      - ./docker/db/seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: payment
+    ports:
+      - "3306:3306"
 
   beanstalkd:
     image: bodsch/docker-beanstalkd

@@ -4,36 +4,32 @@ declare(strict_types=1);
 
 namespace Theago\BackendChallange\Models;
 
-use MongoDB\Client;
-use MongoDB\Collection;
-use MongoDB\Database;
+use PDO;
+use PDOException;
 use Theago\BackendChallange\Utils\Utils;
 
-class AbstractModel
+abstract class AbstractModel
 {
-    protected Client $client;
-    protected Database $database;
-
-    protected Collection $collection;
+    protected ?PDO $conn = null;
 
     public function __construct()
     {
         try {
-            $this->client = new Client('mongodb://mongodb:27017');
-            $this->database = $this->client->selectDatabase('payment');
+            $host = getenv('DB_HOST');
+            $username = getenv('DB_USER');
+            $password = getenv('DB_PASS');
+            $dbName = getenv('DB_NAME');
+
+            $this->conn = new PDO(
+                dsn: 'mysql:host=' . $host . ';dbname=' . $dbName,
+                username: $username,
+                password: $password
+            );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo 'Connection Error: ' . $e->getMessage();
         } catch (\Throwable $e) {
             Utils::dd($e->getMessage(), true);
         }
-    }
-
-    public function findAll(): array
-    {
-        $allData = [];
-        $fetch = $this->collection->find();
-
-        foreach ($fetch as $row) {
-            $allData[] = $row;
-        }
-        return $allData;
     }
 }
