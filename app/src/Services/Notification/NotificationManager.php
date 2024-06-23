@@ -11,11 +11,13 @@ class NotificationManager
     private int $maxRetries = 5;
     private INotificaton $notifier;
 
-    public function __construct(INotificaton $notifier) {
+    public function __construct(INotificaton $notifier)
+    {
         $this->notifier = $notifier;
     }
 
-    public function sendNotification(string $recipient, string $message): bool {
+    public function sendNotification(string $recipient, string $message): bool
+    {
         $attempt = 0;
 
         while ($attempt < $this->maxRetries) {
