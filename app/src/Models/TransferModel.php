@@ -7,6 +7,8 @@ namespace Theago\BackendChallange\Models;
 use Exception;
 use Theago\BackendChallange\Exceptions\Transfer\TransferException;
 use Theago\BackendChallange\Models\AbstractModel;
+use Theago\BackendChallange\Services\Notification\MailNotification;
+use Theago\BackendChallange\Services\Notification\NotificationManager;
 use Throwable;
 
 class TransferModel extends AbstractModel
@@ -39,8 +41,6 @@ class TransferModel extends AbstractModel
 
             file_put_contents("/var/log/transferWorker.err.log", $e->getMessage(), FILE_APPEND);
             throw new TransferException();
-
-            // TODO: Observability $e->getStackTrace();
         }
     }
 }

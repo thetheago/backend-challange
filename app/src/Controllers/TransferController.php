@@ -12,6 +12,8 @@ use Theago\BackendChallange\Exceptions\ValidationException;
 use Theago\BackendChallange\Models\TransferModel;
 use Theago\BackendChallange\Models\UserModel;
 use Theago\BackendChallange\Responses\JsonResponse;
+use Theago\BackendChallange\Services\Notification\MailNotification;
+use Theago\BackendChallange\Services\Notification\NotificationManager;
 use Theago\BackendChallange\Types\TransferType;
 use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayeeExists;
 use Theago\BackendChallange\Validators\TransferValidators\ValidateIfPayerExists;
@@ -77,5 +79,9 @@ class TransferController extends AbstractController
 
         $transferModel = new TransferModel();
         $transferModel->transfer(from: $payer, to: $payee, value: $value);
+        (new NotificationManager(new MailNotification()))->sendNotification(
+            recipient: $payer->getEmail(),
+            message: 'Your transfer has been made succefully'
+        );
     }
 }

@@ -2,16 +2,16 @@ Draft
 
 Passo 1: Orgnizar estrutura [x]
 Passo 2: Organizar serviço com mongodb e beanstalk [x]
-Passo 3: Garantir ACID na transferencia (Saga pattern na mensageria) []
-Passo 4: Enviar notificação em caso de Ok ou Falha
-    (lembrar de tratar também a indisponibilidade do serviço de e-mail) []
+Passo 3: Garantir ACID na transferencia (Saga pattern na mensageria) [x]
+Passo 4: Enviar notificação em caso de Ok ou Falha [x]
+    (lembrar de tratar também a indisponibilidade do serviço de e-mail) [x]
 Passo 5: Fazer testes []
 
 Remind :
+FAZER DOCUMENTAÇÃO []
 Tratar erros de inconsistencia nos users (Registrar mesmo cpf & email) []
-Fazer containers de injeção de dependencia []
+Fazer containers de injeção de dependencia (middleware) []
 Fazer validação para models []
-Fazer auto-increment do id no mongo []
 Utilizar enums []
 Colocar content-type acceptable no restful []
 Observabilidade das exceções gerais no index.php []

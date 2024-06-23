@@ -100,14 +100,14 @@ class UserModel extends AbstractModel
     {
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = :id");
         $stmt->bindParam(':id', $id);
-        return $this->extracted($stmt);
+        return $this->execute($stmt);
     }
 
     public function findByEmail(string $email): self|null
     {
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
-        return $this->extracted($stmt);
+        return $this->execute($stmt);
     }
 
     private function fillAttributes(array $user): void
@@ -162,8 +162,9 @@ class UserModel extends AbstractModel
      * @param false|\PDOStatement $stmt
      * @return $this|null
      */
-    public function extracted(false|\PDOStatement $stmt): ?UserModel
+    public function execute(false|\PDOStatement $stmt): ?UserModel
     {
+        // TODO: Bad smell, metodo fazendo mais de uma coisa.
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
