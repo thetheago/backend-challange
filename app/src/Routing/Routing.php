@@ -55,7 +55,7 @@ class Routing implements IRouting
 
             $controller = new $route['controller']($this->payload);
             if (!empty($route['param'])) {
-                $controller->{$this->method}($route['param']);
+                echo $controller->{$this->method}($route['param']);
                 return;
             }
             echo $controller->{$this->method}();
