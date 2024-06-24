@@ -114,4 +114,6 @@ Link : https://miro.com/app/board/uXjVK4nECBE=/?share_link_id=186829003122
 
 ## Nota pessoal ❤️
 
+Como serviço de e-mail é apenas para simulação e não envia e-mail de verdade, estou logando no arquivo notifications.log que irá ser criado no /src.
+
 Apesar de não ter feito tudo que planejei, irei continuar dando continuidade neste projeto para fim de estudo e conclusão do próprio. Obrigado pela oportunidade de participar do desafio!
