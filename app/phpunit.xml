@@ -1,4 +1,7 @@
 <phpunit bootstrap="tests/bootstrap.php" colors="true">
+    <php>
+        <env name="test" value="true"/>
+    </php>
     <testsuites>
         <testsuite name="Testes Backend Challange">
             <directory>tests</directory>

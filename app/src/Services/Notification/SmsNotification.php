@@ -7,7 +7,7 @@ namespace Theago\BackendChallange\Services\Notification;
 use Theago\BackendChallange\Services\Notification\INotificaton;
 use Theago\BackendChallange\Utils\Utils;
 
-class MailNotification implements INotificaton
+class SmsNotification implements INotificaton
 {
     public function send(string $recipient, string $message): bool
     {

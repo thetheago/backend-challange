@@ -25,6 +25,7 @@ services:
       - ./docker/db/data:/var/lib/db
       - ./docker/db/migration.sql:/docker-entrypoint-initdb.d/1-migration.sql
       - ./docker/db/seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
+      - ./docker/db/tests_bootstrap.sql:/docker-entrypoint-initdb.d/3-test.sql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: payment

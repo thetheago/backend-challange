@@ -1,6 +1,6 @@
 <?php
 
-require_once "../vendor/autoload.php";
+require dirname(__FILE__, 2) . "/vendor/autoload.php";
 
 $host = getenv('DB_HOST');
 $username = getenv('DB_USER');

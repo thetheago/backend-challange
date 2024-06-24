@@ -9,7 +9,7 @@ INSERT INTO users (id, name, email, cpf, shopkeeper, amount) VALUES
 (8, 'Mick Jagger', 'mick.jagger@rollingstones.com', '555.666.777-88', true, 830.30),
 (9, 'David Bowie', 'david.bowie@ziggy.com', '666.777.888-99', false, 920.90),
 (10, 'Jimi Hendrix', 'jimi.hendrix@purplehaze.com', '777.888.999-00', false, 410.10),
-(11, 'Beyoncé Knowles', 'beyonce@destinyschild.com', '888.999.000-11', true, 1000.00),
+(11, 'Beyonce Knowles', 'beyonce@destinyschild.com', '888.999.000-11', true, 1000.00),
 (12, 'Axl Rose', 'axl.rose@gnr.com', '999.000.111-22', false, 300.30),
 (13, 'Slash Hudson', 'slash.hudson@gnr.com', '000.111.222-33', false, 310.40),
 (14, 'Eddie Vedder', 'eddie.vedder@pearljam.com', '111.222.333-55', false, 500.50),
