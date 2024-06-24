@@ -20,9 +20,92 @@ Tendo os requisitos acima, é só rodar ```docker compose up -d``` e ele irá ba
 ## Como rodar os testes 🧪
 Para rodar os testes vá no diretório do docker-compose.yml e rode o comando ```docker compose exec payment vendor/bin/phpunit```
 
-## Fluxograma da rota /transfer 📜
+## Documentação das rotas 📜
+### POST /transfer
+#### Payload
+```
+{
+  "value": 100.20,
+  "payer": 4,
+  "payee": 15
+}
+```
+#### Response
+```
+200 Ok
+{
+    "message": "Your transfer will be processed in a few seconds."
+}
+```
+#### Fluxo
 ![Fluxograma](https://cdn.discordapp.com/attachments/1106044734734090301/1254785651874856980/Flowchart.jpg?ex=667ac1b4&is=66797034&hm=2244f0e1311f213b1e637a2c783369e09fc242fd10ef7abe8616b61d0cd254c6&)
 Link : https://miro.com/app/board/uXjVK4nECBE=/?share_link_id=186829003122
+
+### GET /user - Retorna todos os usuários
+#### Response
+```
+200 Ok
+[
+    {
+		"id": 1,
+		"name": "Freddie Mercury",
+		"email": "freddie.mercury@queen.com",
+		"cpf": "123.456.789-10",
+		"shopkeeper": true,
+		"amount": 300
+	},
+	{
+		"id": 2,
+		"name": "Elvis Presley",
+		"email": "elvis.presley@king.com",
+		"cpf": "111.222.333-44",
+		"shopkeeper": false,
+		"amount": 500.5
+	},
+	...
+]
+```
+
+### GET /user/{id} - Retorna todos os usuários
+#### Response
+```
+200 Ok
+[
+    {
+		"id": 1,
+		"name": "Freddie Mercury",
+		"email": "freddie.mercury@queen.com",
+		"cpf": "123.456.789-10",
+		"shopkeeper": true,
+		"amount": 300
+	}
+]
+```
+
+### POST /user
+#### Payload
+```
+{
+    "name": "Freddie Mercury",
+    "email": "freddie.mercury@queen.com",
+    "cpf": "123.456.789-10",
+    "shopkeeper": true,
+    "amount": 300
+}
+```
+#### Response
+```
+201 Created
+{
+    "id": 1,
+    "name": "Freddie Mercury",
+    "email": "freddie.mercury@queen.com",
+    "cpf": "123.456.789-10",
+    "shopkeeper": true,
+    "amount": 300
+}
+```
+
 ## Projetos pessoais usados como referência ✨
 
 - Projeto em PHP para filtrar planos de telefone https://github.com/thetheago/CellphonePlans
