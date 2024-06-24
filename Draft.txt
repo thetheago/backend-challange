@@ -17,7 +17,7 @@ Fazer validação para models []
 Utilizar enums []
 Colocar content-type acceptable no restful []
 Observabilidade das exceções gerais no index.php []
-Fazer fluxograma []
+Fazer fluxograma [x]
 
 
 ------------
