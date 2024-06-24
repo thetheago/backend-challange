@@ -7,6 +7,7 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/var/www/
+      - ./docker/db/tests_bootstrap.sql:/var/scripts/tests_bootstrap.sql
     command: /bin/bash -c "/usr/local/bin/start.sh"
     depends_on:
       - db
@@ -14,6 +15,7 @@ services:
     environment:
       DB_HOST: db
       DB_NAME: payment
+      DB_TEST_NAME: payment_test
       DB_USER: root
       DB_PASS: root
 

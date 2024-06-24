@@ -6,7 +6,8 @@
     "autoload": {
         "psr-4": {
             "Theago\\BackendChallange\\": "src/",
-            "Theago\\Beanstalkd\\": "beanstalkd/"
+            "Theago\\Beanstalkd\\": "beanstalkd/",
+            "Theago\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -20,6 +21,7 @@
         "pda/pheanstalk": "^5.0"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.0"
+        "squizlabs/php_codesniffer": "^3.0",
+        "phpunit/phpunit": "^11"
     }
 }
