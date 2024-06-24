@@ -24,9 +24,9 @@ class TransferControllerTest extends AbstractTestCase
 
         $controller = new TransferController(
             [
-                "value"=> 100.20,
-                "payer"=> 22,
-                "payee"=> 15
+                "value" => 100.20,
+                "payer" => 22,
+                "payee" => 15
             ]
         );
         $controller->post();
@@ -40,9 +40,9 @@ class TransferControllerTest extends AbstractTestCase
 
         $controller = new TransferController(
             [
-                "value"=> 100.20,
-                "payer"=> 4,
-                "payee"=> 40
+                "value" => 100.20,
+                "payer" => 4,
+                "payee" => 40
             ]
         );
         $controller->post();
@@ -56,9 +56,9 @@ class TransferControllerTest extends AbstractTestCase
 
         $controller = new TransferController(
             [
-                "value"=> 100.20,
-                "payer"=> 1,
-                "payee"=> 15
+                "value" => 100.20,
+                "payer" => 1,
+                "payee" => 15
             ]
         );
         $controller->post();
@@ -71,9 +71,9 @@ class TransferControllerTest extends AbstractTestCase
 
         $controller = new TransferController(
             [
-                "value"=> 50.34,
-                "payer"=> $payerId,
-                "payee"=> $payeeId
+                "value" => 50.34,
+                "payer" => $payerId,
+                "payee" => $payeeId
             ]
         );
         $request = $controller->post();

@@ -6,7 +6,7 @@ namespace Theago\Beanstalkd;
 
 use Pheanstalk\Values\Job;
 use Pheanstalk\Values\TubeName;
-use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentAuthenticator;
+use Theago\BackendChallange\BeanstalkdJobs\Payment\PaymentAuthorizator;
 use Theago\BackendChallange\Controllers\TransferController;
 use Theago\BackendChallange\Exceptions\ServiceIndisponibleException;
 use Theago\BackendChallange\Exceptions\Transfer\TransferException;
@@ -27,7 +27,7 @@ class ProcessPaymentsWorker extends Worker
         $data = json_decode(json: $job->getData(), associative: true);
 
         try {
-            $authenticated = PaymentAuthenticator::isAuthenticated();
+            $authenticated = PaymentAuthorizator::isAuthorizated();
 
             if ($authenticated) {
                 $transferController = new TransferController();

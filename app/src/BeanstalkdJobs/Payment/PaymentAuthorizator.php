@@ -6,9 +6,9 @@ namespace Theago\BackendChallange\BeanstalkdJobs\Payment;
 
 use Theago\BackendChallange\Exceptions\ServiceIndisponibleException;
 
-class PaymentAuthenticator
+class PaymentAuthorizator
 {
-    public static function isAuthenticated(): bool
+    public static function isAuthorizated(): bool
     {
         try {
             $ch = curl_init();
