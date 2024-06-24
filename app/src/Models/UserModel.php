@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Theago\BackendChallange\Models;
 
 use PDO;
+use Theago\BackendChallange\Exceptions\Models\DuplicatedKeyException;
 use Theago\BackendChallange\Utils\Utils;
 
 class UserModel extends AbstractModel
@@ -76,10 +77,14 @@ class UserModel extends AbstractModel
         $this->id = $id;
     }
 
+    /**
+     * @throws DuplicatedKeyException
+     */
     public function save(): self
     {
         try {
-            $stmt = $this->conn->prepare("INSERT INTO users (':name, :email, :cpf, :shopkeeper, :amount')");
+            $stmt = $this->conn->prepare("INSERT INTO users (name, email, cpf, shopkeeper, amount)
+                                                VALUES (:name, :email, :cpf, :shopkeeper, :amount)");
             $stmt->bindParam(':name', $this->name);
             $stmt->bindParam(':email', $this->email);
             $stmt->bindParam(':cpf', $this->cpf);
@@ -88,9 +93,18 @@ class UserModel extends AbstractModel
 
             $stmt->execute();
 
+            $lastInsertId = $this->conn->lastInsertId();
+            $this->setId((int) $lastInsertId);
+
+            return $this;
+        } catch (\PDOException $e) {
+            if ($e->getCode() == 23000) {
+                return throw new DuplicatedKeyException('You cannot have two users with the same cpf and e-mail.');
+            }
+
             return $this;
         } catch (\Throwable $e) {
-            Utils::dd($e->getMessage());
+            Utils::dd($e);
 
             return $this;
         }
