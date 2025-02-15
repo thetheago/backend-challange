@@ -38,7 +38,7 @@ Para rodar os testes vá no diretório do docker-compose.yml e rode o comando ``
 }
 ```
 #### Fluxo
-![Fluxograma](https://cdn.discordapp.com/attachments/1106044734734090301/1254785651874856980/Flowchart.jpg?ex=667ac1b4&is=66797034&hm=2244f0e1311f213b1e637a2c783369e09fc242fd10ef7abe8616b61d0cd254c6&)
+![Fluxograma](https://github.com/thetheago/backend-challange/blob/main/architecture.png)
 Link : https://miro.com/app/board/uXjVK4nECBE=/?share_link_id=186829003122
 
 ### GET /user - Retorna todos os usuários
